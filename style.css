@@ -1,0 +1,19 @@
+.dataview_image {height: 62px !important; width: 100% !important;}
+
+#fixed_height{
+    height: 500px !important;
+    display: block !important;
+    overflow: scroll !important;
+}
+/* .dataview_text {
+    padding-top: 0 !important;
+    padding-right: 0 !important;
+    padding-bottom: 0 !important;
+    padding-left: 0 !important;
+    border-radius: 0 !important;
+}
+
+.dataview_row {
+    row-gap: 0 !important;
+    column-gap: 0 !important;
+} */
