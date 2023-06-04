@@ -1,6 +1,9 @@
-.dataview_image {height: 62px !important; width: 100% !important;}
+.dataview_image {
+    height: 62px !important; 
+    width: 100% !important;
+}
 
-#fixed_height{
+#datasset_view{
     height: 500px !important;
     display: block !important;
     overflow: scroll !important;
