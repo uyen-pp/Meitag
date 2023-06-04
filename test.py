@@ -107,6 +107,14 @@ def renew_dataset(new_samples):
     
     return [image_files] + ret
 
+def select_all(dataset):
+    x = [True] * len(dataset) + [None]*(max_num_samples-len(dataset))
+    return x
+
+def unselect_all():
+    x = [False] * max_num_samples
+    return x
+
 with gr.Blocks(css='/Users/uyen/MeiTag/style.css') as demo:
     dataset_state = gr.State([])
 
@@ -134,6 +142,9 @@ with gr.Blocks(css='/Users/uyen/MeiTag/style.css') as demo:
                 btn_select_all = gr.Button(
                             value="Select All", 
                         )
+                btn_unselect_all = gr.Button(
+                            value="Unselect All"
+                            )
                 save_invidual_img = gr.Button(
                             value="Save Changess", 
                         )
@@ -155,8 +166,13 @@ with gr.Blocks(css='/Users/uyen/MeiTag/style.css') as demo:
             
             reset.click(refresh_dataset, table_ui, [dataset_state] + table_ui)
             
-            btn_select_all.click(select_all, dataset_state, [ele for ele in table_ui if ele=='checkbox'])
-
+            btn_select_all.click(select_all, 
+                                 dataset_state, 
+                                 [ele for ele in table_ui if str(ele)=='checkbox']
+                                 )
+            btn_unselect_all.click(unselect_all, 
+                                   None, 
+                                   [ele for ele in table_ui if str(ele)=='checkbox'])
         with right:
             with gr.Row():
                 editings = gr.Gallery()
