@@ -3,10 +3,13 @@
     width: 100% !important;
 }
 
-#datasset_view{
+#dataset_view{
     height: 500px !important;
     display: block !important;
     overflow: scroll !important;
+}
+#dataset_download{
+    height: 48px !important;
 }
 /* .dataview_text {
     padding-top: 0 !important;
