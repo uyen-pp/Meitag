@@ -20,8 +20,7 @@ def init(max_num_samples = 10):
                     capt_ext = gr.Textbox(value='.caption', label='Caption file extension:', interactive=True)
                 with gr.Column():
                     load_capt = gr.Checkbox(label='Load existing captions', value=True)
-            with gr.Row():
-                progress=gr.Progress()
+                
             # Actions
             with gr.Row():
                 uploaded = gr.UploadButton(
@@ -97,19 +96,8 @@ def init(max_num_samples = 10):
         gr.Text("On going")
 
 
-
-import argparse
-
-
+with gr.Blocks(css='css/style.css') as demo:
+    init(300)
 
 if __name__ == "__main__":
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--nmax', '-n', type=int, default=300)
-    parser.add_argument('--ext', '-e', type=str, default='.caption')
-
-    args = parser.parse_args()
-
-    with gr.Blocks(css='css/style.css') as demo:
-        init(args.nmax)
     demo.queue(concurrency_count=16).launch()
