@@ -1,14 +1,12 @@
 import gradio as gr
-from state import DataTableUI, State
-import utils
-from os import path as osp
+from ui.ui_datatable import DataTableUI
 
-max_num_samples = 10
-UI = DataTableUI(max_num_samples)
 
-with gr.Blocks(css='./style.css') as demo:
+def init(max_num_samples = 10):
+    UI = DataTableUI(max_num_samples)
 
-    gr.Markdown("<h1>TagManagement</h1>")
+    with gr.Row():
+        gr.Markdown("<h1>👩🏻‍💻 Mei's Tag Manager</h1>")
     
     with gr.Row():
         left, right = gr.Column(scale=2), gr.Column(scale=1)
@@ -94,7 +92,24 @@ with gr.Blocks(css='./style.css') as demo:
                             )
         
         btn_save.click(UI.save_dataset, outputs=dataset_zip)
+    
+    with gr.Row():
+        gr.Text("On going")
+
+
+
+import argparse
+
 
 
 if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--nmax', '-n', type=int, default=300)
+    parser.add_argument('--ext', '-e', type=str, default='.caption')
+
+    args = parser.parse_args()
+
+    with gr.Blocks(css='css/style.css') as demo:
+        init(args.nmax)
     demo.queue(concurrency_count=16).launch()

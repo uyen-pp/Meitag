@@ -1,38 +1,11 @@
-from itertools import chain
-from dataset import ImageDataset
-from torch.utils.data import ConcatDataset
-import utils
-import gradio as gr
 from os import path as osp
+import gradio as gr
 
-class State:
-    def __init__(self) -> None:
-        self.dataset = []
-        self.editings = set([]) #List of editing rows indexes
-        self.num_samples = 0
+import sys
+sys.path.append("./utilities")
 
-    def open_dataset(self, checkboxes, images, captions, taglists):
-        self.dataset = ImageDataset(
-            checks = checkboxes,
-            img_paths = images,
-            captions = captions,
-            taglists = taglists
-        )
-
-        self.num_samples = len(self.dataset)
-    
-    def add_sample(self, checkboxes, images, captions, taglists):
-        """
-        Add a list of sample to current dataset
-        """
-        dataset = ImageDataset(
-            checks = checkboxes,
-            img_paths = images,
-            captions = captions,
-            taglists = taglists
-        )
-        self.dataset = ConcatDataset([self.dataset, dataset])
-        self.num_samples = len(self.dataset)
+from .state import State
+from utilities import utils
 
 class DataTableUI:
     def __init__(self, max_num_samples=100) -> None:
@@ -64,7 +37,6 @@ class DataTableUI:
         """
         TO create a table with fixed number of rows, which will be replacing by uploaded data
         """
-        # dataset_view = []
         checkboxes = []
         images = []
         captions = []
@@ -93,6 +65,9 @@ class DataTableUI:
         self.ui_taglists = taglists
     
     def checkbox_change(self, checked, idx):
+        """
+        Checkbox select/unselect event trigger
+        """
         idx = int(idx)
         if checked: 
             self.state.editings.add(idx)
@@ -107,8 +82,18 @@ class DataTableUI:
         return ret
 
     def caption_change(self, caption, idx):
+        """
+        Caption edit event trigger
+        """
         idx = int(idx)
-        # self.state.d
+        self.state.dataset[idx].caption = caption
+
+    # def caption_change(self, caption, idx):
+    #     """
+    #     Caption edit event trigger
+    #     """
+    #     idx = int(idx)
+    #     self.state.dataset[idx].caption = caption
     
     def select_all(self):
         x = [True] * self.max_samples
@@ -116,6 +101,9 @@ class DataTableUI:
         return x
 
     def unselect_all(self):
+        """
+        SelectAll button trigger
+        """
         x = [False] * self.max_samples
         self.state.editings = set([])
         return x
@@ -133,6 +121,9 @@ class DataTableUI:
         return ret
 
     def save_dataset(self):
+        """
+        Archive current dataset as dataset.zip
+        """
         import tempfile
         tmpdir = tempfile.mkdtemp(dir='./tmp')
         path=tmpdir+'/dataset.zip'

@@ -1,0 +1,14 @@
+gradio
+
+
+# Hi,
+ 
+# Here is link to my github: github.com/uyen-pp?tab=repositorieshttps://github.com/uyen-pp?tab=repositories
+
+# As I have had my full time jobs, I didn't have too much time to take care of my profile but you can see there many projects i have worked on:
+# - Data-intensive Web app with with streamlit as UI: https://github.com/uyen-pp/simcel
+# or Gradio as UI:
+# - (Tabular) data manipulation:
+
+# - Data pipeline and transformation: 
+ 
